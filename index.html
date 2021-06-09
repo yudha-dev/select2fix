@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      table,
+      td,
+      th {
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 15px;
+      }
+      section {
+        width: 75%;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="form">
+      <select class="select2" style="width: 100%;" multiple>
+        <option value="">Pilih Warna</option>
+        <option value="orange">orange</option>
+        <option value="white">white</option>
+        <option value="purple">purple</option>
+      </select>
+    </section>
+    <section class="table" style="margin-top: 20px;">
+      <table style="display: none;">
+        <tbody></tbody>
+      </table>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+      $(".select2").select2({
+        tags: false,
+        placeholder: "Pilih warna"
+      });
+
+      $(".select2").on("select2:select", (e) => {
+        let html = "";
+        $("table").show();
+        html += `<tr id="tr-${e.params.data.text}">`;
+        html += `<td>${e.params.data.text}</td>`;
+        html += "</tr>";
+        $("tbody").append(html);
+      });
+
+      $(".select2").on("select2:unselect", (e) => {
+        $(`#tr-${e.params.data.text}`).remove();
+      });
+    </script>
+  </body>
+</html>
